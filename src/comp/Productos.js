@@ -29,7 +29,7 @@ const Productos = () => {
         <div className="Productos">
             {estado}
             {datos.map((producto) => (
-                <div key={producto.id}>
+                <div key={producto.id} className="producto">
                     <div><img src={producto.image} alt="#" /></div>
                     <div className="descripcion">
                         <h6>{producto.title}</h6>
