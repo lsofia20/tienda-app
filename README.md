@@ -1,4 +1,5 @@
-Creado por: Laura Sofia Nuñez
+Creado por: Laura Sofia Nuñez. \
+
 Codigo: 0000209239
 
 # Getting Started with Create React App
