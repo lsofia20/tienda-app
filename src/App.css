@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Raleway', sans-serif;
 }
 
 .App-logo {
@@ -8,7 +9,6 @@
 }
 
 .titulo{
-  width: 100%;
   height: 10vh;
   background-color:rgb(41,128,185);
   display: flex;
@@ -33,18 +33,24 @@
 }
 
 .Productos{
-  width: 100%;
+  width: 98%;
   min-height: 80vh;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-items: center;
+  align-items: flex-start;
   padding: 10px;
 }
 
 img{
-  width: 250px;
-  height: 250px;
+  width: 170px;
+    height: 170px;
   transition: all 0.3s ease;
+}
+
+.imagen_carrito{
+  width: 100%;
+  height: 100%;
 }
 
 img:hover{
@@ -53,6 +59,32 @@ img:hover{
 
 .descripcion{
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
+  padding-inline: 10px;
+}
+
+h6, h5, h4{
+  margin-block: 10px;
+}
+
+.CarritoContainer {
+  position: absolute;
+  width: 95%;
+  right: 10px; 
+  left: 10px;
+  background-color: white; /* Cambia el fondo a blanco o el color deseado */
+  padding: 10px;
+  border: 1px solid #ccc;
+  z-index: 999; /* Asegura que esté por encima de otros elementos */
+  margin-block-start: 1105px;
+  height: 1000px;
+}
+
+button{
+  background-color: rgb(0, 119, 106);
+  border-radius: 8px;
+  border-color: rgb(56, 142, 133);
+  font-family: 'Raleway', sans-serif;
+  padding: 5px;
 }

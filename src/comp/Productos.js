@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import '../App.css';
+import { useCarrito } from '../CarritoContext';
 
 const Productos = () => {
+    const { agregarAlCarrito } = useCarrito();
     const [estado, establecerEstado] = useState("");
     const [datos, establecerDatos] = useState([]);
+    const [mostrarProductos, setMostrarProductos] = useState(12); 
+    const productosPorPagina = 12; 
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("todos"); 
 
     useEffect(() => {
-        // Usamos la función fetch para obtener datos de la API
+        // Obtener datos de la API
         fetch("https://fakestoreapi.com/products")
             .then((response) => {
                 if (!response.ok) {
@@ -17,7 +22,7 @@ const Productos = () => {
             .then((data) => {
                 console.log(data);
                 establecerDatos(data);
-                establecerEstado(""); // Cambiamos el estado a vacío después de obtener los datos
+                establecerEstado(""); 
             })
             .catch((error) => {
                 console.error(error);
@@ -25,19 +30,56 @@ const Productos = () => {
             });
     }, []);
 
+    const cargarMasProductos = () => {
+        setMostrarProductos(mostrarProductos + productosPorPagina);
+    };
+
+    const filtrarProductosPorCategoria = (producto) => {
+        if (categoriaSeleccionada === "todos") {
+            return true; // Mostrar todos los productos si "todos" está seleccionado
+        } else {
+            return producto.category === categoriaSeleccionada;
+        }
+    };
+
     return (
         <div className="Productos">
+            <div className="filtro-categorias">
+                <label>Filtrar por categoría:</label>
+                <select
+                    value={categoriaSeleccionada}
+                    onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+                >
+                    <option value="todos">Todos</option>
+                    <option value="electronics">Electrónicos</option>
+                    <option value="clothing">Ropa</option>
+                    <option value="jewelery">Joyería</option>
+                    {/**/}
+                </select>
+            </div>
+
             {estado}
-            {datos.map((producto) => (
-                <div key={producto.id} className="producto">
-                    <div><img src={producto.image} alt="#" /></div>
-                    <div className="descripcion">
-                        <h6>{producto.title}</h6>
-                        <h6>{`Precio: ${producto.price}`}</h6>
-                        <h6>{`Descripción: ${producto.description}`}</h6>
+            {datos
+                .filter(filtrarProductosPorCategoria)
+                .slice(0, mostrarProductos)
+                .map((producto) => (
+                    <div key={producto.id} className="producto">
+                        <div><img src={producto.image} alt="#" /></div>
+                        <div className="descripcion">
+                            <h4>{producto.title}</h4>
+                            <h5>{`Precio: $${producto.price}`}</h5>
+                            <h6>{`Descripción: ${producto.description}`}</h6>
+                            <button className="boton_añadir" onClick={() => agregarAlCarrito(producto)}>
+                                Añadir al carro
+                            </button>
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            {mostrarProductos < datos.length && (
+                <button className="cargar-mas" onClick={cargarMasProductos}>
+                    Ver más
+                </button>
+            )}
         </div>
     )
 }
